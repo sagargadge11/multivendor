@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -9,9 +10,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('vendors', function (Blueprint $table) {
-            $table->string('business_type')->nullable()->after('business_name');
-            $table->string('postal_code', 20)->nullable()->after('city');
-            $table->string('banner')->nullable()->after('logo');
+            $table->string('business_type')->nullable();
+            $table->string('postal_code', 20)->nullable();
+            $table->string('banner')->nullable();
             $table->text('rejection_reason')->nullable();
             $table->text('suspension_reason')->nullable();
             $table->timestamp('suspended_at')->nullable();
