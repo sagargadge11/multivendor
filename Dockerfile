@@ -12,12 +12,13 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libzip-dev \
     libicu-dev \
+    libonig-dev \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions separately
+# Install PHP extensions
 RUN docker-php-ext-install pdo_pgsql mbstring bcmath exif pcntl
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
