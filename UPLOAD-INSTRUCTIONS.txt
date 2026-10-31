@@ -1,0 +1,28 @@
+Marketplace - Render Dockerfile upload
+
+IMPORTANT
+This Dockerfile is designed for the current repository layout, where app/,
+database/migrations/, and resources/views/ contain marketplace overlay code
+but the Laravel framework skeleton is missing.
+
+UPLOAD
+1. Open https://github.com/sagargadge11/multivendor
+2. Click Add file > Create new file.
+3. In the filename field, enter exactly: Dockerfile
+4. Open this supplied Dockerfile, copy all its contents, and paste them into GitHub.
+5. Commit directly to the main branch (or create a branch if you prefer).
+6. In Render, use the existing Web Service and set Runtime/Environment to Docker.
+   Set Dockerfile Path to ./Dockerfile and Root Directory to blank / repository root.
+7. Set PORT to 10000 in Render if it is not already set.
+
+IMPORTANT LIMITATIONS
+- This builds a Laravel 13 skeleton during the Docker image build and overlays
+  the repository's app/, migrations, and Blade views.
+- It does not yet merge routes-milestone-2-snippet.php into Laravel's routes/web.php.
+  That route file must be reviewed and merged before the app's pages can work.
+- Your existing migrations were originally documented for MySQL. They must be
+  reviewed for PostgreSQL compatibility before running them against Neon.
+- Do not run migrations yet and do not paste database passwords into GitHub.
+- A successful image build does not mean the app is fully configured or ready
+  for production. APP_KEY and Neon DB environment variables still need to be
+  configured securely in Render.
