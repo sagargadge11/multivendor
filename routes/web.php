@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -35,4 +36,24 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->g
     Route::get('/dashboard', [VendorDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/run-marketplace-migrations/{key}', function ($key) {
+    abort_unless(
+        hash_equals((string) env('MIGRATION_SECRET'), (string) $key)
+        && env('MIGRATION_SECRET'),
+        404
+    );
+
+    Artisan::call('migrate', [
+        '--force' => true,
+    ]);
+
+    return response()->json([
+        'status' => 'success',
+        'output' => Artisan::output(),
+    ]);
 });
