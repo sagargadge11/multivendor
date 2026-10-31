@@ -35,6 +35,7 @@ RUN composer create-project laravel/laravel . "^13.0" --no-interaction --prefer-
     && php artisan config:clear \
     && php artisan route:clear \
     && php artisan view:clear \
+    && php artisan migrate --force \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R ug+rwx storage bootstrap/cache
 
