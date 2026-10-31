@@ -50,9 +50,11 @@ RUN composer create-project laravel/laravel . "^13.0" --no-interaction --prefer-
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R ug+rwx storage bootstrap/cache
 
-# Configure Apache for Render
+# Configure Apache to serve Laravel's public directory
 RUN sed -ri 's/<VirtualHost \*:80>/<VirtualHost *:10000>/' /etc/apache2/sites-available/000-default.conf \
-    && printf '\nListen 10000\n' >> /etc/apache2/ports.conf
+    && sed -ri 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
+    && sed -ri 's/^Listen 80$/Listen 10000/' /etc/apache2/ports.conf \
+    && printf '\n<Directory /var/www/html/public>\n    AllowOverride All\n    Require all granted\n</Directory>\n' >> /etc/apache2/apache2.conf
 
 EXPOSE 10000
 
