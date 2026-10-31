@@ -51,6 +51,10 @@ Route::get('/run-marketplace-migrations/{key}', function ($key) {
         '--force' => true,
     ]);
 
+    Artisan::call('db:seed', [
+    '--force' => true,
+]);
+
     return response()->json([
         'status' => 'success',
         'output' => Artisan::output(),
