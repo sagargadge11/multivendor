@@ -39,7 +39,6 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->g
 });
 
 
-use Illuminate\Support\Facades\Artisan;
 
 Route::get('/run-marketplace-migrations/{key}', function ($key) {
     abort_unless(
