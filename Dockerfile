@@ -38,7 +38,6 @@ RUN composer create-project laravel/laravel . "^13.0" --no-interaction --prefer-
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R ug+rwx storage bootstrap/cache
 
-RUN grep -n "'url' => env('DATABASE_URL')" config/database.php
 
 RUN sed -ri 's/<VirtualHost \*:80>/<VirtualHost *:10000>/' /etc/apache2/sites-available/000-default.conf \
     && sed -ri 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
