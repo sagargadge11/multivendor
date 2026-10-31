@@ -1,4 +1,4 @@
-
+```dockerfile
 FROM php:8.3-apache
 
 ENV PORT=10000
@@ -23,12 +23,14 @@ WORKDIR /var/www/html
 
 COPY app/ /tmp/marketplace-source/app/
 COPY database/migrations/ /tmp/marketplace-source/database/migrations/
+COPY bootstrap/ /tmp/marketplace-source/bootstrap/
 COPY database/seeders/ /tmp/marketplace-source/database/seeders/
 COPY resources/views/ /tmp/marketplace-source/resources/views/
 COPY routes/ /tmp/marketplace-source/routes/
 
 RUN composer create-project laravel/laravel . "^13.0" --no-interaction --prefer-dist \
     && cp -a /tmp/marketplace-source/app/. app/ \
+    && cp -a /tmp/marketplace-source/bootstrap/. bootstrap/ \
     && mkdir -p database/migrations database/seeders resources/views \
     && cp -a /tmp/marketplace-source/database/migrations/. database/migrations/ \
     && cp -a /tmp/marketplace-source/database/seeders/. database/seeders/ \
@@ -41,7 +43,6 @@ RUN composer create-project laravel/laravel . "^13.0" --no-interaction --prefer-
     && php artisan view:clear \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R ug+rwx storage bootstrap/cache
-
 
 RUN sed -ri 's/<VirtualHost \*:80>/<VirtualHost *:10000>/' /etc/apache2/sites-available/000-default.conf \
     && sed -ri 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
