@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -10,6 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('vendors', function (Blueprint $table) {
+            // PostgreSQL does not support column-position modifiers such as after().
             $table->string('business_type')->nullable();
             $table->string('postal_code', 20)->nullable();
             $table->string('banner')->nullable();
@@ -17,20 +17,12 @@ return new class extends Migration
             $table->text('suspension_reason')->nullable();
             $table->timestamp('suspended_at')->nullable();
             $table->timestamp('profile_completed_at')->nullable();
-
-            $table->index('listing_type');
-            $table->index('status');
-            $table->index('verification_status');
         });
     }
 
     public function down(): void
     {
         Schema::table('vendors', function (Blueprint $table) {
-            $table->dropIndex(['listing_type']);
-            $table->dropIndex(['status']);
-            $table->dropIndex(['verification_status']);
-
             $table->dropColumn([
                 'business_type',
                 'postal_code',
