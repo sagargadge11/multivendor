@@ -24,12 +24,14 @@ WORKDIR /var/www/html
 COPY app/ /tmp/marketplace-source/app/
 COPY database/migrations/ /tmp/marketplace-source/database/migrations/
 COPY resources/views/ /tmp/marketplace-source/resources/views/
+COPY routes/ /tmp/marketplace-source/routes/
 
 RUN composer create-project laravel/laravel . "^13.0" --no-interaction --prefer-dist \
     && cp -a /tmp/marketplace-source/app/. app/ \
     && mkdir -p database/migrations resources/views \
     && cp -a /tmp/marketplace-source/database/migrations/. database/migrations/ \
     && cp -a /tmp/marketplace-source/resources/views/. resources/views/ \
+    && cp -a /tmp/marketplace-source/routes/. routes/ \
     && rm -rf /tmp/marketplace-source \
     && composer install --no-dev --optimize-autoloader --no-interaction \
     && php artisan config:clear \
