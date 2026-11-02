@@ -88,7 +88,8 @@ Route::middleware([
         ->name('profile.update');
 });
 
-// TEMPORARY: Remove this route after migrations and seeding are complete.
+
+// TEMPORARY: Remove after running migrations.
 Route::get('/run-marketplace-migrations/{key}', function ($key) {
     $secret = env('MIGRATION_SECRET');
 
@@ -101,17 +102,8 @@ Route::get('/run-marketplace-migrations/{key}', function ($key) {
         '--force' => true,
     ]);
 
-    $migrationOutput = Artisan::output();
-
-    Artisan::call('db:seed', [
-        '--force' => true,
-    ]);
-
-    $seederOutput = Artisan::output();
-
     return response()->json([
         'status' => 'success',
-        'migration_output' => $migrationOutput,
-        'seeder_output' => $seederOutput,
+        'migration_output' => Artisan::output(),
     ]);
 });
