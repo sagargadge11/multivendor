@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\VendorController as AdminVendorController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Vendor\DashboardController as VendorDashboardController;
 use App\Http\Controllers\Vendor\ProfileController;
 
@@ -38,6 +40,18 @@ Route::middleware([
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])
         ->name('dashboard');
+
+    Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories', [AdminCategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{category}/edit', [AdminCategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
+
+    Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
+    Route::get('/products/{product}', [AdminProductController::class, 'show'])->name('products.show');
+    Route::post('/products/{product}/approve', [AdminProductController::class, 'approve'])->name('products.approve');
+    Route::post('/products/{product}/reject', [AdminProductController::class, 'reject'])->name('products.reject');
 
     Route::get('/vendors', [AdminVendorController::class, 'index'])
         ->name('vendors.index');

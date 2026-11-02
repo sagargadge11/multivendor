@@ -26,8 +26,8 @@
             <nav class="nav flex-column gap-1">
                 <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
                 <a class="nav-link" href="{{ route('admin.vendors.index') }}"><i class="bi bi-shop me-2"></i>Vendors</a>
-                <span class="nav-link text-muted"><i class="bi bi-box-seam me-2"></i>Products (Milestone 3)</span>
-                <span class="nav-link text-muted"><i class="bi bi-tags me-2"></i>Categories</span>
+                <a class="nav-link" href="{{ route('admin.products.index') }}"><i class="bi bi-box-seam me-2"></i>Product Review</a>
+                <a class="nav-link" href="{{ route('admin.categories.index') }}"><i class="bi bi-tags me-2"></i>Global Categories</a>
                 <span class="nav-link text-muted"><i class="bi bi-envelope me-2"></i>Enquiries</span>
                 <span class="nav-link text-muted"><i class="bi bi-plug me-2"></i>Integrations</span>
             </nav>

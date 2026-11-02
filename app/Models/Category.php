@@ -8,10 +8,28 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-    protected $fillable = ['parent_id','name','slug','description','image','status'];
-    protected function casts(): array { return ['status' => 'boolean']; }
+    protected $fillable = [
+        'parent_id', 'name', 'slug', 'description', 'image', 'status',
+        'seo_title', 'seo_description', 'seo_keywords', 'meta_robots',
+    ];
 
-    public function parent(): BelongsTo { return $this->belongsTo(Category::class, 'parent_id'); }
-    public function children(): HasMany { return $this->hasMany(Category::class, 'parent_id'); }
-    public function products(): HasMany { return $this->hasMany(Product::class); }
+    protected function casts(): array
+    {
+        return ['status' => 'boolean'];
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 }

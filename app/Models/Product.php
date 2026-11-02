@@ -10,14 +10,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Product extends Model
 {
     protected $fillable = [
-        'vendor_id','category_id','brand_id','external_id','sku','slug','name',
-        'description','price','currency','product_url','source_type','stock_status',
-        'approval_status','publication_status','approved_at','last_synced_at',
+        'vendor_id', 'category_id', 'brand_id', 'external_id', 'sku', 'slug', 'name',
+        'description', 'price', 'currency', 'product_url', 'source_type', 'stock_status',
+        'approval_status', 'publication_status', 'approved_at', 'last_synced_at',
+        'seo_title', 'seo_description', 'seo_keywords', 'meta_robots',
     ];
 
     protected function casts(): array
     {
-        return ['price' => 'decimal:2', 'approved_at' => 'datetime', 'last_synced_at' => 'datetime'];
+        return [
+            'price' => 'decimal:2',
+            'approved_at' => 'datetime',
+            'last_synced_at' => 'datetime',
+        ];
     }
 
     public function vendor(): BelongsTo { return $this->belongsTo(Vendor::class); }
@@ -35,5 +40,16 @@ class Product extends Model
             ->whereHas('vendor', fn ($vendor) => $vendor
                 ->where('verification_status', 'verified')
                 ->where('status', 'active'));
+    }
+
+    public function getSeoTitleAttribute(): ?string
+    {
+        return $this->attributes['seo_title'] ?? ($this->name . ' | Marketplace');
+    }
+
+    public function getSeoDescriptionAttribute(): ?string
+    {
+        return $this->attributes['seo_description']
+            ?? \Illuminate\Support\Str::limit(strip_tags((string) $this->description), 155);
     }
 }
